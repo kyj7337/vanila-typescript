@@ -63,6 +63,29 @@ function handlePwOnChange(e) {
 function onClickLogin(e) {
     console.log(e);
     console.log(idValue, pwValue);
+    var params = new FormData();
+    var clientSecret = 'fiwejlkfjijiew84ohigljw4k348gjfsjeourwourijfjklweoe3oeruofjklsl';
+    params.append('grant_type', 'password');
+    params.append('client_id', 'applicant-api');
+    params.append('client_secret', clientSecret);
+    if (idValue && pwValue) {
+        params.append('username', idValue);
+        params.append('password', pwValue);
+    }
+    var url = 'https://api.applicant.viewinter-hr.ai/oauth/token';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'X-genesislab-device-type-id': '30000',
+        },
+        body: params,
+    })
+        .then(function (res) { return res.json(); })
+        .then(function (res) {
+        console.log('으악:', res);
+    });
 }
 id === null || id === void 0 ? void 0 : id.addEventListener('change', handleIdOnChange);
 password === null || password === void 0 ? void 0 : password.addEventListener('change', handlePwOnChange);
